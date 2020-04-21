@@ -272,6 +272,9 @@ find_program(AWK NAMES gawk awk)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+file(GLOB png_h ${CMAKE_CURRENT_BINARY_DIR}/*.h) # ADDITION
+set(png_include ${CMAKE_CURRENT_BINARY_DIR})
+
 if(NOT AWK OR ANDROID)
   # No awk available to generate sources; use pre-built pnglibconf.h
   configure_file(${CMAKE_CURRENT_SOURCE_DIR}/scripts/pnglibconf.h.prebuilt
@@ -844,7 +847,14 @@ if(PNG_SHARED)
     CLEAN_DIRECT_OUTPUT 1)
 endif()
 
-# INSTALL
+# EXPORT ADDITIONS
+
+target_include_directories(png
+  INTERFACE
+	$<BUILD_INTERFACE:${png_include}>
+	$<INSTALL_INTERFACE:include>
+)
+
 if(NOT SKIP_INSTALL_LIBRARIES AND NOT SKIP_INSTALL_ALL)
   install(TARGETS ${PNG_LIB_TARGETS}
           EXPORT libpng
@@ -915,7 +925,7 @@ endif()
 
 # Create an export file that CMake users can include() to import our targets.
 if(NOT SKIP_INSTALL_EXPORT AND NOT SKIP_INSTALL_ALL)
-  install(EXPORT libpng DESTINATION lib/libpng FILE lib${PNG_LIB_NAME}.cmake)
+  install(EXPORT libpng DESTINATION lib/libpng FILE libpng-config.cmake)
 endif()
 
 # what's with libpng-manual.txt and all the extra files?
