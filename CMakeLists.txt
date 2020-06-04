@@ -529,18 +529,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${ZLIB_INCLUDE_DIR})
 
 unset(PNG_LIB_TARGETS)
 
-if(WIN32)
-  if (CMAKE_BUILD_TYPE EQUAL "Debug")
-    message(STATUS "Build type is debug")
-    set(ZLIB_LIBRARY ${ZLIB_LIBRARY_DEBUG})
-  else()
-    message(STATUS "Build type is release")
-    set(ZLIB_LIBRARY ${ZLIB_LIBRARY_RELEASE})
-  endif()
-endif() # Unix build finds zlib properly
-
 if(PNG_SHARED)
-  # set(ZLIB_LIBRARY zlib) # Correct linking  
   add_library(png SHARED ${libpng_sources})
   set(PNG_LIB_TARGETS png)
   set_target_properties(png PROPERTIES OUTPUT_NAME ${PNG_LIB_NAME})
@@ -564,7 +553,6 @@ if(PNG_SHARED)
 endif()
 
 if(PNG_STATIC)
-  # set(ZLIB_LIBRARY zlibstatic) # Correct linking
   # does not work without changing name
   set(PNG_LIB_NAME_STATIC png_static)
   add_library(png_static STATIC ${libpng_sources})
