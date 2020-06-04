@@ -924,6 +924,9 @@ if(NOT SKIP_INSTALL_FILES AND NOT SKIP_INSTALL_ALL)
 endif()
 
 # Create an export file that CMake users can include() to import our targets.
+#Unix possible fix
+file(MAKE_DIRECTORY ${CMAKE_INSTALL_PREFIX}/lib/libpng)
+
 if(NOT SKIP_INSTALL_EXPORT AND NOT SKIP_INSTALL_ALL)
   install(EXPORT libpng DESTINATION lib/libpng FILE libpng-config.cmake)
 endif()
