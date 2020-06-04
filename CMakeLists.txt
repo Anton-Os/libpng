@@ -530,9 +530,11 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${ZLIB_INCLUDE_DIR})
 unset(PNG_LIB_TARGETS)
 
 if(WIN32)
-  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+  if (CMAKE_BUILD_TYPE EQUAL "Debug")
+    message(STATUS "Build type is debug")
     set(ZLIB_LIBRARY ${ZLIB_LIBRARY_DEBUG})
   else()
+    message(STATUS "Build type is release")
     set(ZLIB_LIBRARY ${ZLIB_LIBRARY_RELEASE})
   endif()
 endif() # Unix build finds zlib properly
